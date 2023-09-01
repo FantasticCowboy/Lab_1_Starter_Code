@@ -6,8 +6,11 @@ package main
 //	string.Fields(s string) []string: Split a string into words
 
 import (
+	"bufio"
+	"fmt"
 	"log"
 	"os"
+	"strings"
 )
 
 func main() {
@@ -19,6 +22,16 @@ func main() {
 }
 
 func scan(p string) error {
-	// TODO: Implement
+	f, err := os.Open(p)
+	if err != nil {
+		panic("Oh no file doesn't exist!")
+	}
+	buf := bufio.NewScanner(f)
+	for buf.Scan() {
+		words := strings.Fields(buf.Text())
+		for i, word := range words {
+			fmt.Printf("Found %s at %d\n", word, i)
+		}
+	}
 	return nil
 }
